@@ -1,4 +1,4 @@
-package net.glitchifyed.rebalancedmending.mixin;
+package net.glitchifyed.enchantment_tweaks.mixin;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ExperienceOrb;

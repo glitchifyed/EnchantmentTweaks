@@ -29,6 +29,7 @@
   "slots": [
     "head"
   ],
+  "exclusive_set": "#enchantment_tweaks:exclusive_set/protection",
   "supported_items": "#minecraft:enchantable/head_armor",
   "weight": 2
 }

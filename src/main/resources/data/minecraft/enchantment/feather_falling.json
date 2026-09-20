@@ -44,6 +44,7 @@
   "slots": [
     "armor"
   ],
+  "exclusive_set": "#enchantment_tweaks:exclusive_set/protection",
   "supported_items": "#minecraft:enchantable/foot_armor",
   "weight": 5
 }

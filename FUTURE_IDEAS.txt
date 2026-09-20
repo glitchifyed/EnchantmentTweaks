@@ -1,0 +1,13 @@
+Gear persistency - similarly to elytra, gear won't break at 0 durability but will instead become unusable
+Unbreaking - now deterministic, set multiplier to durability (show durability in tooltip without debug settings?)
+Netherite repairs - netherite scraps or diamond blocks to repair instead of netherite ingots
+Elytra nerfs - no more boosting, no unbreaking or mending
+Minecarts - experimental minecarts enabled by default, with speed set to 20
+Minecart rails - crafted with nuggets instead of bars
+Unstackables - can be stacked up to four times
+Anvils - no more limits, levels climb slower, repairs and renames cost no exp
+Tools - gold tools more usable, netherite more durable but slower, diamond little less durable
+    tool progression goes wood, stone, copper, iron, gold, diamond, netherite
+Deaths - works hand in hand with persistency, gear stays on respawn but gets fully broken, has to be repaired.
+    the rest of the items go into a grave at the death location. if died in a dangerous spot:
+    e.g. lava - non-lavaproof items will be destroyed, etc.

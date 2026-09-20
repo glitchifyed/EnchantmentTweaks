@@ -1,6 +1,6 @@
 {
   "values": [
-    "#minecraft:enchantable/melee_weapon",
-    "#minecraft:axes"
+    "#minecraft:enchantable/sharp_weapon",
+    "#enchantment_tweaks:enchantable/arrow"
   ]
 }

@@ -36,7 +36,6 @@
   "slots": [
     "mainhand"
   ],
-  "primary_items": "#enchantment_tweaks:enchantable/arrow",
   "supported_items": "#enchantment_tweaks:enchantable/arrow",
   "weight": 2
 }

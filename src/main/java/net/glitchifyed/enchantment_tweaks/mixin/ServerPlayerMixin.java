@@ -1,7 +1,6 @@
-package net.glitchifyed.rebalancedmending.mixin;
+package net.glitchifyed.enchantment_tweaks.mixin;
 
-import net.glitchifyed.rebalancedmending.RMGameRules;
-import net.glitchifyed.rebalancedmending.RebalancedMending;
+import net.glitchifyed.enchantment_tweaks.ETGameRules;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
@@ -28,7 +27,7 @@ public class ServerPlayerMixin {
     public void tickMending(CallbackInfo ci) {
         var player = (ServerPlayer) (Object) this;
 
-        var maxExpLevel = player.level().getGameRules().get(RMGameRules.MENDING_MAX_EXP_LEVEL);
+        var maxExpLevel = player.level().getGameRules().get(ETGameRules.MENDING_MAX_EXP_LEVEL);
         var playerExpLevel = player.experienceLevel;
         var progress = Math.min(playerExpLevel / (float)maxExpLevel, 1);
         var ticksBetweenRepairs = (TICKS_BETWEEN_REPAIRS_MAX - (TICKS_BETWEEN_REPAIRS_MAX - TICKS_BETWEEN_REPAIRS_MIN) * progress);

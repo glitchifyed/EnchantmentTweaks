@@ -19,7 +19,6 @@
       }
     ]
   },
-  "exclusive_set": "#minecraft:exclusive_set/bow",
   "max_cost": {
     "base": 50,
     "per_level_above_first": 0
@@ -32,6 +31,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/bow",
+  "supported_items": "#enchantment_tweaks:enchantable/arrow",
   "weight": 1
 }

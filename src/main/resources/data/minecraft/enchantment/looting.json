@@ -37,6 +37,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/melee_weapon",
+  "supported_items": "#enchantment_tweaks:enchantable/looting_weapon",
   "weight": 2
 }

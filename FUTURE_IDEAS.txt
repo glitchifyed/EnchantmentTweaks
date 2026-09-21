@@ -11,3 +11,4 @@ Tools - gold tools more usable, netherite more durable but slower, diamond littl
 Deaths - works hand in hand with persistency, gear stays on respawn but gets fully broken, has to be repaired.
     the rest of the items go into a grave at the death location. if died in a dangerous spot:
     e.g. lava - non-lavaproof items will be destroyed, etc.
+Infinity works on special arrows? Might be a little broken - make it instead consume an arrow every second shot?

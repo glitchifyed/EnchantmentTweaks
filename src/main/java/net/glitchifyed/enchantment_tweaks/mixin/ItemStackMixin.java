@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.function.TriConsumer;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,7 +29,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.function.BiConsumer;
 
 @Mixin(ItemStack.class)
-public class ItemStackMixin implements ItemStackInterface {
+public abstract class ItemStackMixin implements ItemStackInterface {
+    @Unique
+    private Player currentPlayer;
+
     @Override
     public boolean EnchantmentTweaks$IsBroken() {
         ItemStack itemStack = (ItemStack) (Object) this;
@@ -38,21 +43,36 @@ public class ItemStackMixin implements ItemStackInterface {
 
     @ModifyReturnValue(method = "isBroken", at = @At("RETURN"))
     private boolean isBroken(boolean original) {
+        if (currentPlayer == null)
+            return original;
+
         return false;
     }
 
     @ModifyReturnValue(method = "nextDamageWillBreak", at = @At("RETURN"))
     private boolean nextDamageWillBreak(boolean original) {
+        if (currentPlayer == null)
+            return original;
+
         return false;
     }
 
+
+    @Inject(method = "inventoryTick", at = @At("HEAD"))
+    private void getCurrentPlayer(Level level, Entity owner, EquipmentSlot slot, CallbackInfo ci) {
+        if (owner instanceof Player player)
+            currentPlayer = player;
+        else
+            currentPlayer = null;
+    }
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     private void use(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (EnchantmentTweaks$IsBroken()) {
             cir.setReturnValue(InteractionResult.FAIL);
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(player);
+            EnchantmentTweaks.WarnPlayerBrokenItem(player, null);
+            EnchantmentTweaks.ForceSyncClient(player);
         }
     }
 
@@ -61,7 +81,8 @@ public class ItemStackMixin implements ItemStackInterface {
         if (EnchantmentTweaks$IsBroken()) {
             cir.setReturnValue(InteractionResult.FAIL);
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(context.getPlayer());
+            EnchantmentTweaks.WarnPlayerBrokenItem(context.getPlayer(), null);
+            EnchantmentTweaks.ForceSyncClient(context.getPlayer());
         }
     }
 
@@ -70,7 +91,8 @@ public class ItemStackMixin implements ItemStackInterface {
         if (EnchantmentTweaks$IsBroken()) {
             cir.setReturnValue(false);
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(player);
+            EnchantmentTweaks.WarnPlayerBrokenItem(player, null);
+            EnchantmentTweaks.ForceSyncClient(player);
         }
     }
 
@@ -78,6 +100,8 @@ public class ItemStackMixin implements ItemStackInterface {
     private void forEachModifierOne(EquipmentSlot slot, BiConsumer<Holder<Attribute>, AttributeModifier> consumer, CallbackInfo ci) {
         if (EnchantmentTweaks$IsBroken()) {
             ci.cancel();
+
+            EnchantmentTweaks.WarnPlayerBrokenItem(currentPlayer, null);
         }
     }
 
@@ -85,6 +109,8 @@ public class ItemStackMixin implements ItemStackInterface {
     private void forEachModifierTwo(EquipmentSlotGroup slot, TriConsumer<Holder<Attribute>, AttributeModifier, ItemAttributeModifiers.Display> consumer, CallbackInfo ci) {
         if (EnchantmentTweaks$IsBroken()) {
             ci.cancel();
+
+            EnchantmentTweaks.WarnPlayerBrokenItem(currentPlayer, null);
         }
     }
 }

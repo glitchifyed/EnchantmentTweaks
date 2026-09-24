@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#enchantment_tweaks:netherite_smithing_materials",
+  "base": "minecraft:diamond_shovel",
+  "result": {
+    "id": "minecraft:netherite_shovel"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

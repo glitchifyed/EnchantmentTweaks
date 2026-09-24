@@ -2,11 +2,16 @@ package net.glitchifyed.enchantment_tweaks.mixin;
 
 import com.google.common.collect.Lists;
 import net.glitchifyed.enchantment_tweaks.EnchantmentTweaks;
+import net.glitchifyed.enchantment_tweaks.interfaces.ItemStackInterface;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantable;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -15,11 +20,13 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
 @Mixin(EnchantmentHelper.class)
@@ -111,5 +118,21 @@ public class EnchantmentHelperMixin {
         // not totally sure if my changes to the code even help at all. all these systems need a redesign-
         // -in the future. it is a gargantuan task, however, so i don't expect that to be done any time soon.
         cir.setReturnValue(results);
+    }
+
+    @Inject(method = "forEachModifier(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Ljava/util/function/BiConsumer;)V", at = @At("HEAD"), cancellable = true)
+    private static void forEachModifierOne(ItemStack itemStack, EquipmentSlot slot, BiConsumer<Holder<Attribute>, AttributeModifier> consumer, CallbackInfo ci) {
+        ItemStackInterface itemStackInterface = (ItemStackInterface) (Object) itemStack;
+
+        if (itemStackInterface.EnchantmentTweaks$IsBroken())
+            ci.cancel();
+    }
+
+    @Inject(method = "forEachModifier(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlotGroup;Ljava/util/function/BiConsumer;)V", at = @At("HEAD"), cancellable = true)
+    private static void forEachModifierTwo(ItemStack itemStack, EquipmentSlotGroup slot, BiConsumer<Holder<Attribute>, AttributeModifier> consumer, CallbackInfo ci) {
+        ItemStackInterface itemStackInterface = (ItemStackInterface) (Object) itemStack;
+
+        if (itemStackInterface.EnchantmentTweaks$IsBroken())
+            ci.cancel();
     }
 }

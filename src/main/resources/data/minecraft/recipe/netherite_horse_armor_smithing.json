@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#enchantment_tweaks:netherite_smithing_materials",
+  "base": "minecraft:diamond_horse_armor",
+  "result": {
+    "id": "minecraft:netherite_horse_armor"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

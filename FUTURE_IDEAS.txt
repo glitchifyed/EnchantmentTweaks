@@ -1,6 +1,4 @@
-Gear persistency - similarly to elytra, gear won't break at 0 durability but will instead become unusable
-Unbreaking - now deterministic, set multiplier to durability (show durability in tooltip without debug settings?)
-Netherite repairs - netherite scraps or diamond blocks to repair instead of netherite ingots
+Unbreaking - now deterministic, set multiplier to durability
 Elytra nerfs - no more boosting, no unbreaking or mending
 Minecarts - experimental minecarts enabled by default, with speed set to 20
 Minecart rails - crafted with nuggets instead of bars

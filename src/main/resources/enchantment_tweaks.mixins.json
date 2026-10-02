@@ -6,9 +6,11 @@
   "mixins": [
     "EnchantmentHelperMixin",
     "ExperienceOrbMixin",
+    "GameRulesMixin",
     "ItemStackMixin",
     "PlayerMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin",
+    "WorldDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1

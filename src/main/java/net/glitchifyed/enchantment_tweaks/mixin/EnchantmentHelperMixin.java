@@ -81,7 +81,7 @@ public class EnchantmentHelperMixin {
                 // so at lvl 30 OCCASIONALLY the player may get FOUR enchantments
                 // and SOMETIMES they'll only get 2
                 // but most commonly they'll get the default (3 for lvl 30)
-                int randomCountAdjustment = Math.clamp(random.nextInt(-4, 3) / 2, -1, 1);
+                int randomCountAdjustment = Math.clamp(random.nextInt(-2, 4) / 3, -1, 1);
                 // add these two values together and WHABAM
                 int enchantmentCount = Math.max(baseEnchantmentCount + randomCountAdjustment, 1);
 

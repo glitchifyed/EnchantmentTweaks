@@ -47,7 +47,7 @@ public abstract class ItemStackMixin implements ItemStackInterface {
 
     @Unique
     public boolean IsItemElytraIncompatible() {
-        if (currentPlayer == null || !currentPlayer.isFallFlying() || ETGameRules.GetValue(ETGameRules.ELYTRA_BOOSTING))
+        if (currentPlayer == null || !currentPlayer.isFallFlying() || ETGameRules.GetValue(currentPlayer.level().dimension() == Level.END ? ETGameRules.ELYTRA_BOOSTING_IN_END : ETGameRules.ELYTRA_BOOSTING))
             return false;
 
         ItemStack itemStack = (ItemStack) (Object) this;

@@ -1,9 +1,5 @@
 Unbreaking - now deterministic, set multiplier to durability
-Elytra nerfs - no more boosting, no unbreaking or mending
-Minecarts - experimental minecarts enabled by default, with speed set to 20
-Minecart rails - crafted with nuggets instead of bars
 Unstackables - can be stacked up to four times
-Anvils - no more limits, levels climb slower, repairs and renames cost no exp
 Tools - gold tools more usable, netherite more durable but slower, diamond little less durable
     tool progression goes wood, stone, copper, iron, gold, diamond, netherite
 Deaths - works hand in hand with persistency, gear stays on respawn but gets fully broken, has to be repaired.

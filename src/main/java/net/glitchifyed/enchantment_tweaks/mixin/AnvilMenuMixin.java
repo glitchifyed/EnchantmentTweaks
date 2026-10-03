@@ -102,6 +102,15 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
                     for (var entry : additionalEnchants.keySet()) {
                         var enchantment = entry.value();
 
+                        boolean incompatible = false;
+
+                        for (var entry2 : inputEnchants.keySet()) {
+                            incompatible = entry != entry2 && !Enchantment.areCompatible(entry, entry2);
+                        }
+
+                        if (incompatible)
+                            continue;
+
                         if (!enchantment.canEnchant(outputStack) && !twoBooks) {
                             if (secondaryIsBook) {
                                 continue;
@@ -109,20 +118,6 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
                             acceptable = false;
 
-                            break;
-                        }
-
-                        for (var entry2 : inputEnchants.keySet()) {
-                            if (entry == entry2 || Enchantment.areCompatible(entry, entry2)) {
-                                continue;
-                            }
-
-                            acceptable = false;
-
-                            break;
-                        }
-
-                        if (!acceptable) {
                             break;
                         }
 

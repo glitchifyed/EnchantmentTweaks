@@ -1,6 +1,7 @@
 package net.glitchifyed.enchantment_tweaks.mixin;
 
 import com.google.common.collect.Lists;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.glitchifyed.enchantment_tweaks.EnchantmentTweaks;
 import net.glitchifyed.enchantment_tweaks.interfaces.ItemStackInterface;
 import net.minecraft.core.Holder;

@@ -16,7 +16,8 @@ public class ETGameRules {
     public static GameRule<Integer> COMBINE_LEVEL_COST;
 
     public static GameRule<Boolean> ELYTRA_SICKNESS;
-    public static GameRule<Double> ELYTRA_BOOST_SCALE;
+    public static GameRule<Boolean> ELYTRA_BOOSTING;
+    public static GameRule<Boolean> ELYTRA_SICKNESS_IN_END;
 
 
     public static void Register() {
@@ -53,10 +54,15 @@ public class ETGameRules {
                 .category(GameRuleCategory.MISC)
                 .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "elytra_sickness"));
 
-        ELYTRA_BOOST_SCALE = GameRuleBuilder
-                .forDouble(0.3)
+        ELYTRA_SICKNESS_IN_END = GameRuleBuilder
+                .forBoolean(false)
                 .category(GameRuleCategory.MISC)
-                .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "elytra_boost_scale"));
+                .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "elytra_sickness_in_end"));
+
+        ELYTRA_BOOSTING = GameRuleBuilder
+                .forBoolean(false)
+                .category(GameRuleCategory.MISC)
+                .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "elytra_boosting"));
     }
 
     public static <T> T GetValue(GameRule<T> gameRule) {

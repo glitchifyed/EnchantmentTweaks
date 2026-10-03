@@ -1,10 +1,12 @@
 package net.glitchifyed.enchantment_tweaks.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.glitchifyed.enchantment_tweaks.ETGameRules;
 import net.glitchifyed.enchantment_tweaks.EnchantmentTweaks;
 import net.glitchifyed.enchantment_tweaks.interfaces.ItemStackInterface;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -13,9 +15,12 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.function.TriConsumer;
@@ -38,6 +43,28 @@ public abstract class ItemStackMixin implements ItemStackInterface {
         ItemStack itemStack = (ItemStack) (Object) this;
 
         return itemStack.isDamageableItem() && itemStack.getDamageValue() >= itemStack.getMaxDamage();
+    }
+
+    @Unique
+    public boolean IsItemElytraIncompatible() {
+        if (currentPlayer == null || !currentPlayer.isFallFlying() || ETGameRules.GetValue(ETGameRules.ELYTRA_BOOSTING))
+            return false;
+
+        ItemStack itemStack = (ItemStack) (Object) this;
+
+        if (itemStack.is(Items.FIREWORK_ROCKET)) {
+            return true;
+        }
+
+//        if (itemStack.is(Items.TRIDENT) && EnchantmentTweaks.GetIsRaining() && EnchantmentTweaks.GetItemStackEnchantment(itemStack, Enchantments.RIPTIDE) > 0) {
+//            return true;
+//        }
+//
+//        if (itemStack.is(ItemTags.SPEARS) && EnchantmentTweaks.GetItemStackEnchantment(itemStack, Enchantments.LUNGE) > 0) {
+//            return true;
+//        }
+
+        return false;
     }
 
 
@@ -68,6 +95,14 @@ public abstract class ItemStackMixin implements ItemStackInterface {
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     private void use(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+        if (IsItemElytraIncompatible()) {
+            EnchantmentTweaks.WarnPlayer(player, "Elytra boosting is disabled.");
+
+            cir.setReturnValue(InteractionResult.FAIL);
+
+            return;
+        }
+
         if (EnchantmentTweaks$IsBroken()) {
             cir.setReturnValue(InteractionResult.FAIL);
 

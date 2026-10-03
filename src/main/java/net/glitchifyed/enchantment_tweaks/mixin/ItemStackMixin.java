@@ -71,7 +71,7 @@ public abstract class ItemStackMixin implements ItemStackInterface {
         if (EnchantmentTweaks$IsBroken()) {
             cir.setReturnValue(InteractionResult.FAIL);
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(player, null);
+            EnchantmentTweaks.WarnPlayer(player, null);
             EnchantmentTweaks.ForceSyncClient(player);
         }
     }
@@ -81,7 +81,7 @@ public abstract class ItemStackMixin implements ItemStackInterface {
         if (EnchantmentTweaks$IsBroken()) {
             cir.setReturnValue(InteractionResult.FAIL);
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(context.getPlayer(), null);
+            EnchantmentTweaks.WarnPlayer(context.getPlayer(), null);
             EnchantmentTweaks.ForceSyncClient(context.getPlayer());
         }
     }
@@ -91,7 +91,7 @@ public abstract class ItemStackMixin implements ItemStackInterface {
         if (EnchantmentTweaks$IsBroken()) {
             cir.setReturnValue(false);
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(player, null);
+            EnchantmentTweaks.WarnPlayer(player, null);
             EnchantmentTweaks.ForceSyncClient(player);
         }
     }
@@ -101,7 +101,7 @@ public abstract class ItemStackMixin implements ItemStackInterface {
         if (EnchantmentTweaks$IsBroken()) {
             ci.cancel();
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(currentPlayer, null);
+            EnchantmentTweaks.WarnPlayer(currentPlayer, null);
         }
     }
 
@@ -110,7 +110,7 @@ public abstract class ItemStackMixin implements ItemStackInterface {
         if (EnchantmentTweaks$IsBroken()) {
             ci.cancel();
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(currentPlayer, null);
+            EnchantmentTweaks.WarnPlayer(currentPlayer, null);
         }
     }
 }

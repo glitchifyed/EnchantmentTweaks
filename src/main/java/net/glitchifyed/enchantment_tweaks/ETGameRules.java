@@ -15,6 +15,9 @@ public class ETGameRules {
     public static GameRule<Integer> REPAIR_FULL_COST;
     public static GameRule<Integer> COMBINE_LEVEL_COST;
 
+    public static GameRule<Boolean> ELYTRA_SICKNESS;
+    public static GameRule<Double> ELYTRA_BOOST_SCALE;
+
 
     public static void Register() {
         MENDING_MAX_EXP_LEVEL = GameRuleBuilder
@@ -43,6 +46,17 @@ public class ETGameRules {
                 .forInteger(2)
                 .category(GameRuleCategory.MISC)
                 .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "combine_level_cost"));
+
+
+        ELYTRA_SICKNESS = GameRuleBuilder
+                .forBoolean(true)
+                .category(GameRuleCategory.MISC)
+                .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "elytra_sickness"));
+
+        ELYTRA_BOOST_SCALE = GameRuleBuilder
+                .forDouble(0.3)
+                .category(GameRuleCategory.MISC)
+                .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "elytra_boost_scale"));
     }
 
     public static <T> T GetValue(GameRule<T> gameRule) {

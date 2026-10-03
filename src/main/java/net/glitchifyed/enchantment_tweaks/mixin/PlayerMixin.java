@@ -2,10 +2,7 @@ package net.glitchifyed.enchantment_tweaks.mixin;
 
 import net.glitchifyed.enchantment_tweaks.EnchantmentTweaks;
 import net.glitchifyed.enchantment_tweaks.interfaces.ItemStackInterface;
-import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +29,7 @@ public abstract class PlayerMixin {
 
             ServerPlayer player = (ServerPlayer) (Object) this;
 
-            EnchantmentTweaks.WarnPlayerBrokenItem(player, "Turtle Shell is broken and has no water breathing effect!");
+            EnchantmentTweaks.WarnPlayer(player, "Turtle Shell is broken and has no water breathing effect!");
         }
     }
 

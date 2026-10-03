@@ -20,6 +20,8 @@ public class ETGameRules {
     public static GameRule<Boolean> ELYTRA_BOOSTING;
     public static GameRule<Boolean> ELYTRA_BOOSTING_IN_END;
 
+    public static GameRule<Integer> BUNDLE_UNSTACKABLE_MAX;
+
 
     public static void Register() {
         MENDING_MAX_EXP_LEVEL = GameRuleBuilder
@@ -69,6 +71,11 @@ public class ETGameRules {
                 .forBoolean(false)
                 .category(GameRuleCategory.MISC)
                 .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "elytra_boosting_in_end"));
+
+        BUNDLE_UNSTACKABLE_MAX = GameRuleBuilder
+                .forInteger(4)
+                .category(GameRuleCategory.MISC)
+                .buildAndRegister(Identifier.fromNamespaceAndPath(EnchantmentTweaks.MODID, "bundle_max_unstackables"));
     }
 
     public static <T> T GetValue(GameRule<T> gameRule) {

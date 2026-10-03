@@ -33,18 +33,14 @@ public class EnchantmentTweaks implements ModInitializer {
         if (player == null)
             return;
 
-        ServerPlayer serverPlayer = (ServerPlayer) player;
-
-        serverPlayer.sendOverlayMessage(Component.literal(text == null ? "This item is broken and cannot be used!" : text).withColor(TextColor.RED));
+        player.sendOverlayMessage(Component.literal(text == null ? "This item is broken and cannot be used!" : text).withColor(TextColor.RED));
     }
 
     public static void ForceSyncClient(Player player) {
         if (player == null)
             return;
 
-        ServerPlayer serverPlayer = (ServerPlayer) player;
-
-        serverPlayer.inventoryMenu.sendAllDataToRemote();
-        //serverPlayer.connection.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), MobEffects.WATER_BREATHING.))
+        player.inventoryMenu.sendAllDataToRemote();
+        player.containerMenu.sendAllDataToRemote();
     }
 }

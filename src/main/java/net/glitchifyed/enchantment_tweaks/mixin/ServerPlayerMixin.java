@@ -27,7 +27,7 @@ public class ServerPlayerMixin {
     public void tickMending(CallbackInfo ci) {
         var player = (ServerPlayer) (Object) this;
 
-        var maxExpLevel = player.level().getGameRules().get(ETGameRules.MENDING_MAX_EXP_LEVEL);
+        var maxExpLevel = ETGameRules.GetValue(ETGameRules.MENDING_MAX_EXP_LEVEL);
         var playerExpLevel = player.experienceLevel;
         var progress = Math.min(playerExpLevel / (float)maxExpLevel, 1);
         var ticksBetweenRepairs = (TICKS_BETWEEN_REPAIRS_MAX - (TICKS_BETWEEN_REPAIRS_MAX - TICKS_BETWEEN_REPAIRS_MIN) * progress);

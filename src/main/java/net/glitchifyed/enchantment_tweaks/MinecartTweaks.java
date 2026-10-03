@@ -12,7 +12,7 @@ public class MinecartTweaks {
     }
 
     public static FeatureFlagSet getEnabledFeaturesConsideringGameRule(FeatureFlagSet featureSet) {
-        boolean gameRuleEnabled = EnchantmentTweaks.currentServerLevel != null && EnchantmentTweaks.currentServerLevel.getGameRules().get(ETGameRules.FORCE_EXPERIMENTAL_MINECARTS);
+        boolean gameRuleEnabled = ETGameRules.GetValue(ETGameRules.FORCE_EXPERIMENTAL_MINECARTS);
         FeatureFlagSet extraFeatureSet = FeatureFlagSet.of(FeatureFlags.MINECART_IMPROVEMENTS);
 
         if (featureSet.contains(FeatureFlags.MINECART_IMPROVEMENTS)) {

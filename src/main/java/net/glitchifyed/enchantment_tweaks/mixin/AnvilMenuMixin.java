@@ -3,6 +3,7 @@ package net.glitchifyed.enchantment_tweaks.mixin;
 
 import net.glitchifyed.enchantment_tweaks.ETGameRules;
 import net.glitchifyed.enchantment_tweaks.EnchantmentTweaks;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetDataPacket;
@@ -22,6 +23,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Mixin(AnvilMenu.class)
@@ -105,7 +108,11 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
                         boolean incompatible = false;
 
                         for (var entry2 : inputEnchants.keySet()) {
-                            incompatible = entry != entry2 && !Enchantment.areCompatible(entry, entry2);
+                            if (!Enchantment.areCompatible(entry, entry2)) {
+                                incompatible = true;
+
+                                break;
+                            }
                         }
 
                         if (incompatible)
@@ -118,6 +125,10 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
                             acceptable = false;
 
+                            break;
+                        }
+
+                        if (!acceptable) {
                             break;
                         }
 

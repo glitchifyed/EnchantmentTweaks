@@ -75,13 +75,13 @@ public class EnchantmentHelperMixin {
                     results.add((EnchantmentInstance) selectedEnchantmentFromPossibilities.get());
 
                 // uses the level requirement in the enchanting menu to get an amount of enchants applied (max 3)
-                int baseEnchantmentCount = Math.min(enchantmentCost / 7, 3);
+                int baseEnchantmentCount = Math.min(enchantmentCost / 8, 40);
                 // gets a random value between -1, 1 to add to the base count (to range from 1-4)
                 // weighted from most to least common: 0 extras, -1, +1
                 // so at lvl 30 OCCASIONALLY the player may get FOUR enchantments
                 // and SOMETIMES they'll only get 2
                 // but most commonly they'll get the default (3 for lvl 30)
-                int randomCountAdjustment = Math.clamp(random.nextInt(-2, 4) / 3, -1, 1);
+                int randomCountAdjustment = Math.clamp(random.nextInt(-3, 5) / 3, -1, 1);
                 // add these two values together and WHABAM
                 int enchantmentCount = Math.max(baseEnchantmentCount + randomCountAdjustment, 1);
 

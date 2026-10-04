@@ -128,10 +128,6 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
                             break;
                         }
 
-                        if (!acceptable) {
-                            break;
-                        }
-
                         var level = additionalEnchants.getLevel(entry);
                         var primaryLevel = inputEnchants.getLevel(entry);
 

@@ -108,7 +108,7 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
                         boolean incompatible = false;
 
                         for (var entry2 : inputEnchants.keySet()) {
-                            if (!Enchantment.areCompatible(entry, entry2)) {
+                            if (entry != entry2 && !Enchantment.areCompatible(entry, entry2)) {
                                 incompatible = true;
 
                                 break;

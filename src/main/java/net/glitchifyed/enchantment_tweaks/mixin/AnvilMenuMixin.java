@@ -52,8 +52,6 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
     @Inject(method = "onTake", at = @At("RETURN"))
     public void onTake(Player player, ItemStack carried, CallbackInfo ci) {
-        EnchantmentTweaks.LOGGER.info(String.valueOf(cost.get()));
-
         EnchantmentTweaks.ForceSyncClient(player);
     }
 
@@ -105,18 +103,10 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
                     for (var entry : additionalEnchants.keySet()) {
                         var enchantment = entry.value();
 
-                        boolean incompatible = false;
-
                         for (var entry2 : inputEnchants.keySet()) {
-                            if (entry != entry2 && !Enchantment.areCompatible(entry, entry2)) {
-                                incompatible = true;
-
-                                break;
-                            }
+                            if (entry != entry2 && !Enchantment.areCompatible(entry, entry2))
+                                builder.set(entry2, 0);
                         }
-
-                        if (incompatible)
-                            continue;
 
                         if (!enchantment.canEnchant(outputStack) && !twoBooks) {
                             if (secondaryIsBook) {
@@ -141,34 +131,24 @@ abstract class AnvilMenuMixin extends ItemCombinerMenu {
                     if (acceptable) {
                         var outputComponent = builder.toImmutable();
 
-                        int levelDifference = 0;
+                        int inputDifference = 0;
+                        int additionalDifference = 0;
 
-                        if (!inputEnchants.isEmpty() && !additionalEnchants.isEmpty()) {
-                            int inputCost = getCostFromInputsAndOutput(inputEnchants, additionalEnchants, outputComponent);
-                            int additionalCost = getCostFromInputsAndOutput(additionalEnchants, inputEnchants, outputComponent);
+                        for (var entry : outputComponent.keySet()) {
+                            var outputLevel = outputComponent.getLevel(entry);
+                            var inputLevel = inputEnchants.getLevel(entry);
+                            var additionalLevel = additionalEnchants.getLevel(entry);
 
-                            levelDifference = Math.min(inputCost, additionalCost);
-                        }
-                        else if (inputEnchants.isEmpty() != additionalEnchants.isEmpty()) {
-                            for (var entry : outputComponent.keySet()) {
-                                int inputLevel = inputEnchants.getLevel(entry);
-                                int additionalLevel = additionalEnchants.getLevel(entry);
-
-                                int diff = Math.abs(inputLevel - additionalLevel);
-
-                                levelDifference += diff;
-                            }
+                            inputDifference += Math.abs(outputLevel - inputLevel);
+                            additionalDifference += Math.abs(outputLevel - additionalLevel);
                         }
 
-                        if (levelDifference > 0) {
-                            modified = true;
+                        EnchantmentTweaks.LOGGER.info("1: {}, 2: {}", inputDifference, additionalDifference);
 
-                            expCost += levelDifference * ETGameRules.GetValue(ETGameRules.COMBINE_LEVEL_COST);
-                        }
+                        int levelDifference = Math.min(inputDifference, additionalDifference);
+                        modified = true;
 
-                        if (!modified && itemsAreEqual && inputStack.isDamageableItem() && (inputStack.getDamageValue() != 0 || additionalStack.getDamageValue() != 0)) {
-                            modified = true;
-                        }
+                        expCost += levelDifference * ETGameRules.GetValue(ETGameRules.COMBINE_LEVEL_COST);
 
                         EnchantmentHelper.setEnchantments(outputStack, outputComponent);
                     }

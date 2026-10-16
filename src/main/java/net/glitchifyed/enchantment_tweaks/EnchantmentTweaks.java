@@ -9,26 +9,40 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnchantmentTweaks implements ModInitializer {
 
     public static final String MODID = "enchantment_tweaks";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
+    public static final List<Item> BundleStackSizeBlacklist = new ArrayList<>();
+
     public static ServerLevel currentServerLevel;
 
     @Override
     public void onInitialize() {
+        AddItemsToBundleBlacklist();
+
         ETGameRules.Register();
 
         ServerLevelEvents.LOAD.register(((server, level) -> {
             currentServerLevel = level;
         }));
+    }
+
+
+    public static void AddItemsToBundleBlacklist() {
+        BundleStackSizeBlacklist.add(Items.BUNDLE);
     }
 
 

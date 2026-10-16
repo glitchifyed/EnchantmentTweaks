@@ -14,10 +14,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 public class EnchantmentTweaks implements ModInitializer {
@@ -27,11 +31,16 @@ public class EnchantmentTweaks implements ModInitializer {
 
     public static final List<Item> BundleStackSizeBlacklist = new ArrayList<>();
 
+    public static final Dictionary<Block, Double> BeaconBlockPowers = new Hashtable<>();
+
     public static ServerLevel currentServerLevel;
+
+    public static final double MAX_BEACON_BLOCK_POWER = 5.0;
 
     @Override
     public void onInitialize() {
         AddItemsToBundleBlacklist();
+        AddPowersToBeaconBlocks();
 
         ETGameRules.Register();
 
@@ -43,6 +52,14 @@ public class EnchantmentTweaks implements ModInitializer {
 
     public static void AddItemsToBundleBlacklist() {
         BundleStackSizeBlacklist.add(Items.BUNDLE);
+    }
+
+    public static void AddPowersToBeaconBlocks() {
+        BeaconBlockPowers.put(Blocks.IRON_BLOCK, 1.25);
+        BeaconBlockPowers.put(Blocks.GOLD_BLOCK, 1.5);
+        BeaconBlockPowers.put(Blocks.EMERALD_BLOCK, 2.0);
+        BeaconBlockPowers.put(Blocks.DIAMOND_BLOCK, 3.0);
+        BeaconBlockPowers.put(Blocks.NETHERITE_BLOCK, 5.0);
     }
 
 
@@ -65,17 +82,17 @@ public class EnchantmentTweaks implements ModInitializer {
         player.containerMenu.sendAllDataToRemote();
     }
 
-    public static int GetItemStackEnchantment(ItemStack itemStack, ResourceKey<Enchantment> enchantment) {
-        if (currentServerLevel == null)
-            return 0;
-
-        return itemStack.getEnchantments().getLevel(currentServerLevel.registryAccess().getOrThrow(enchantment));
-    }
-
-    public static boolean GetIsRaining() {
-        if (currentServerLevel == null)
-            return false;
-
-        return currentServerLevel.isRaining();
-    }
+//    public static int GetItemStackEnchantment(ItemStack itemStack, ResourceKey<Enchantment> enchantment) {
+//        if (currentServerLevel == null)
+//            return 0;
+//
+//        return itemStack.getEnchantments().getLevel(currentServerLevel.registryAccess().getOrThrow(enchantment));
+//    }
+//
+//    public static boolean GetIsRaining() {
+//        if (currentServerLevel == null)
+//            return false;
+//
+//        return currentServerLevel.isRaining();
+//    }
 }
